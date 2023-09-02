@@ -67,12 +67,20 @@
                             <label for="inputConfirmPassword" class="form-label">Confirm Password</label>
                             <input type="password" class="form-control" id="inputConfirmPassword" placeholder="Confirm your password" name="confirm_password">
                         </div>
-                        <div class="mb-3">
+                        <!-- <div class="mb-3">
                             <label for="inputGender" class="form-label">Gender</label>
                             <select class="form-select" id="inputGender" name="gender">
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
                                 <option value="Other">Other</option>
+                            </select>
+                        </div> -->
+
+                        <div class="mb-3">
+                            <label for="inputRole" class="form-label">Sign up as</label>
+                            <select class="form-select" id="inputRole" name="role">
+                                <option value="Student">Student</option>
+                                <option value="Instructor">Instructor</option>
                             </select>
                         </div>
 

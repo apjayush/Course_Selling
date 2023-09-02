@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class CourseModel extends Model
 {
-    protected $table = 'tbl_courses_list';
+    protected $table = 'Courses';
 
     protected $allowedFields = ['title', 'content'];
 

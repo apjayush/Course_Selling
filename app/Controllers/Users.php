@@ -21,8 +21,8 @@ class Users extends BaseController
 
     public function authenticate()
     {
-        $model = model(StudentSignup::class);
-    
+        $model = model(StudentSignup::class);   //The model here uses StudentSignup to authenticate any student if he signsup 
+        
         helper(['form']);
 
         $rules = [
@@ -34,12 +34,14 @@ class Users extends BaseController
 
             if ($this->request->is('post')) {
 
-                
+
                 $details = $this->request->getPost(['email', 'password']);
-        
+
                 $user = $model->getUserByEmail($details['email']);
 
-               
+                // $cart = $cartmodel->getSignedInUserDetails('email');
+
+
                 if ($user) {
 
                     $pass = $user['password'];
@@ -47,11 +49,14 @@ class Users extends BaseController
                     if (password_verify($details['password'], $pass)) {
 
                         $ses_data = [
-                            'id' => $user['id'],
+                            'id' => $user['user_id'],
                             'name' => $user['first_name'],
                             'email' => $user['email'],
                             'isLoggedIn' => TRUE
                         ];
+
+                       
+                       
 
                         session()->set($ses_data);
                         return redirect()->to('/courses');
@@ -66,24 +71,27 @@ class Users extends BaseController
             }
         }
 
-    
-       
-    
+
+
+
         return view('signin_page');
     }
-    
-
 
 
     public function signout()
     {
+       
+        
+
         // Load the session library
-    $session = \Config\Services::session();
+        $session = \Config\Services::session();
 
-    // Destroy the session
-    $session->destroy();
 
-    return redirect()->to('courses'); // Redirect to the home
+        // Destroy the session
+        $session->destroy();
+
+
+        return redirect()->to('courses'); // Redirect to the home
     }
 
 
@@ -98,10 +106,10 @@ class Users extends BaseController
             $rules = [
                 'first_name' => 'required',
                 'last_name' => 'required',
-                'email' => 'required|valid_email|is_unique[tbl_student_signup.email]',
+                'email' => 'required|valid_email|is_unique[Users.email]',
                 'password' => 'required|min_length[3]',
                 'confirm_password' => 'required|matches[password]',
-                'gender' => 'required'
+                'role' => 'required'
             ];
 
             if ($this->validate($rules)) {
@@ -112,7 +120,7 @@ class Users extends BaseController
                     'email' => $this->request->getPost('email'),
                     'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
                     // 'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
-                    'gender' => $this->request->getPost('gender')
+                    'role' => $this->request->getPost('role')
                 ];
 
                 $model->createUser($data);

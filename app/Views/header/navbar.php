@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary bg-dark" data-bs-theme="dark">
+<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="<?= base_url() ?>">Home</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,25 +31,70 @@
                     <?php else : ?>
                         <a href="/signin" class="btn btn-success">Sign In </a>
                     <?php endif; ?>
-                    
+
 
 
                     <!-- Sign In Button with Bootstrap button classes for instructor -->
-                    <a href="<?= base_url() ?>/instructor_login" class="btn btn-outline-primary">Teach</a>
+                    <a href="<?= base_url() ?>/instructor_login" class="btn btn-info">Teach</a>
 
 
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link cart-button" href="#">
+                    <a class="nav-link cart-button" href="<?= base_url('dashboard') ?>">
                         <i class="fas fa-shopping-cart"></i> View Cart
+                        <span class="cart-count"></span>
                     </a>
                 </li>
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const cartCountElement = document.querySelector('.cart-count');
+                        const isLoggedIn = <?php echo session()->has('isLoggedIn') ? 'true' : 'false'; ?>;
+                        const addToCartButtons = document.querySelectorAll('.addToCartBtn');
+
+                        // Fetch and update cart count using 
+
+                        
+                        
+
+                        if (isLoggedIn) {
+
+                            
+                            function updateCartCount() {
+                                fetch('/cart/get_cart_count') // Create a new method in CartController to get cart count
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        if (data.success) {
+                                            cartCountElement.textContent = data.cartCount;
+                                            console.log(data.cartCount);
+                                        } else {
+                                            // Handle error or show error message
+                                            console.error('Failed to fetch cart count');
+                                        }
+                                    })
+                                    .catch(error => {
+                                        console.error('Error:', error);
+                                    });
+
+                            }
+                            updateCartCount()
+
+                            
+
+                        } 
+
+                    });
+                </script>
+
+
+
             </ul>
 
 
             <form class="d-flex" role="search">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
+                <button class="btn btn-success" type="submit">Search</button>
+
 
                 <?php if (session()->has('user_id')) : ?>
 
@@ -60,6 +105,7 @@
         </div>
     </div>
 </nav>
+
 
 
 <?php base_url() ?>
