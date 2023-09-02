@@ -42,7 +42,13 @@
                 <li class="nav-item">
                     <a class="nav-link cart-button" href="<?= base_url('dashboard') ?>">
                         <i class="fas fa-shopping-cart"></i> View Cart
-                        <span class="cart-count"></span>
+                       
+
+                        <!-- showing the cart count icon above the view cart dynamically -->
+                        <?php if (session()->has('isLoggedIn')) : ?>
+                            <span class="cart-count"></span>
+                        <?php endif; ?>
+
                     </a>
                 </li>
 
@@ -54,12 +60,12 @@
 
                         // Fetch and update cart count using 
 
-                        
-                        
+
+
 
                         if (isLoggedIn) {
 
-                            
+
                             function updateCartCount() {
                                 fetch('/cart/get_cart_count') // Create a new method in CartController to get cart count
                                     .then(response => response.json())
@@ -79,9 +85,9 @@
                             }
                             updateCartCount()
 
-                            
 
-                        } 
+
+                        }
 
                     });
                 </script>

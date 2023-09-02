@@ -7,7 +7,11 @@
     <title>Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="<?php echo base_url('css/cart_icon.css'); ?>">
+    <link rel="stylesheet" href="<?php
+
+use Laminas\Escaper\Escaper;
+
+ echo base_url('css/cart_icon.css'); ?>">
     <link rel="stylesheet" href="<?php echo base_url('css/dashboard.css'); ?>">
 </head>
 
@@ -20,15 +24,17 @@
                 <div class="col-md-8">
                     <div class="card mb-4">
                         <div class="card-header py-3">
-                            <h5 class="mb-0">Cart - 2 items</h5>
+                            <h5 class="mb-0">Cart-items</h5>
                         </div>
                         <div class="card-body">
-                            <!-- Single item -->
+
+                            <?php foreach ($cartitems as $cartitem) : ?>
+                                  <!--  item -->
                             <div class="row">
                                 <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
                                     <!-- Image -->
                                     <div class="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
-                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Vertical/12a.webp" class="w-100" alt="Blue Jeans Jacket" />
+                                        <img src= "<?= esc($cartitem['course_thumbnail']) ?>" class="w-100" alt="Error fetching image"  />
                                         <a href="#!">
                                             <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
                                         </a>
@@ -38,65 +44,35 @@
 
                                 <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
                                     <!-- Data -->
-                                    <p><strong>Blue denim shirt</strong></p>
+                                    <p><strong> <?= esc($cartitem['course_title']) ?></strong></p>
+                                    <p><strong> <?= 'By   ' . esc($cartitem['course_author']) ?></strong></p>
                                     <button type="button" class="btn btn-primary btn-sm me-1 mb-2" data-mdb-toggle="tooltip" title="Remove item">
                                         <i class="fas fa-trash"></i>
                                     </button>
-                                   
+
                                     <!-- Data -->
                                 </div>
 
                                 <div class="col-lg-4 col-md-6 mb-4 mb-lg-0 d-flex justify-content-center align-items-center">
                                     <!-- Price -->
                                     <p class="text-start text-md-center">
-                                        <strong>$17.99</strong>
+                                        <strong><?= esc($cartitem['course_price']) ?></strong>
                                     </p>
                                     <!-- Price -->
                                 </div>
                             </div>
-                            <!-- Single item -->
-
+                            <!--  item -->
                             <hr class="my-4" />
+                            <?php endforeach; ?>
+                          
 
-                            <!-- Single item -->
-                            <div class="row">
-                                <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
-                                    <!-- Image -->
-                                    <div class="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
-                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Vertical/13a.webp" class="w-100" />
-                                        <a href="#!">
-                                            <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
-                                        </a>
-                                    </div>
-                                    <!-- Image -->
-                                </div>
 
-                                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0 ">
-                                    <!-- Data -->
-                                    <p><strong>Blue denim shirt</strong></p>
 
-                                    <button type="button" class="btn btn-primary btn-sm me-1 mb-2" data-mdb-toggle="tooltip" title="Remove item">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                    
-                                    <!-- Data -->
-                                </div>
-
-                                <div class="col-lg-4 col-md-6 mb-4 mb-lg-0 d-flex justify-content-center align-items-center">
-                                   
-
-                                    <!-- Price -->
-                                    <p class="text-start text-md-center">
-                                        <strong>$17.99</strong>
-                                    </p>
-                                    <!-- Price -->
-                                </div>
-                            </div>
                             <!-- Single item -->
                         </div>
                     </div>
-                  
-                   
+
+
                 </div>
                 <div class="col-md-4">
                     <div class="card mb-4">
@@ -105,28 +81,24 @@
                         </div>
                         <div class="card-body">
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
-                                    Products
-                                    <span>$53.98</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                                    Shipping
-                                    <span>Gratis</span>
-                                </li>
+
+                               
                                 <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
                                     <div>
-                                        <strong>Total amount</strong>
+                                        <strong>Total :  <?= "₹ ". esc($totalCost)  ?> </strong>
                                         <strong>
-                                            <p class="mb-0">(including VAT)</p>
+                                            <p class="mb-0">(including GST)</p>
                                         </strong>
                                     </div>
-                                    <span><strong>$53.98</strong></span>
+                                    <span><strong></strong></span>
                                 </li>
                             </ul>
+                                
+                            
+                            <a href="<?= base_url('dashboard') ?>" class="btn btn-primary">Pay Now</a>
+                            <a href="<?= base_url() ?>" class="btn btn-info">Continue Shopping</a>
 
-                            <button type="button" class="btn btn-primary btn-lg btn-block">
-                                Pay Now
-                            </button>
+
                         </div>
                     </div>
                 </div>

@@ -44,7 +44,7 @@
                             <h5 class="card-title fw-bold"><?= esc($course_item['course_title']) ?></h5>
                             <p class="card-text"><?= esc($course_item['course_author']) ?></p>
                             <p class="card-text fw-bold"><?= '₹' . esc($course_item['course_price']) ?></p>
-                            <button type="button" class="btn btn-primary addToCartBtn" data-bs-toggle="modal" data-bs-target="#exampleModal<?= esc($course_item['course_id']) ?>" data-course-id="<?= esc($course_item['course_id']) ?>">
+                            <button type="button" class="btn btn-primary addToCartBtn" data-bs-toggle="modal" data-bs-target="#exampleModal<?= esc($course_item['course_id']) ?>" data-course-id="<?= esc($course_item['course_id']) ?>" data-course-price="<?= esc($course_item['course_price']) ?>">
                                 Buy Now
                             </button>
 
@@ -119,8 +119,10 @@
                     button.addEventListener('click', function(event) {
                         if (isLoggedIn) {
                             const courseId = this.getAttribute('data-course-id');
+                            const coursePrice = parseFloat(this.getAttribute('data-course-price'));
+                            console.log(typeof(coursePrice));
 
-                            addToCart(courseId); // Call the function to send AJAX request
+                            addToCart(courseId, coursePrice); // Call the function to send AJAX request
                         } else {
                             console.log('Login Before adding course');
                         }
@@ -128,7 +130,7 @@
                     });
                 });
 
-                function addToCart(courseId) {
+                function addToCart(courseId,coursePrice ) {
 
 
                     fetch('/cart/add', { // Replace with the actual URL for adding to cart
@@ -137,7 +139,9 @@
                                 'Content-Type': 'application/json',
                             },
                             body: JSON.stringify({
-                                course_id: courseId
+                                course_id: courseId,
+                                course_price: coursePrice,
+
                             }),
                         })
                         .then(response => response.json())
