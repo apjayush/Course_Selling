@@ -7,12 +7,17 @@
     <title>Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    
     <link rel="stylesheet" href="<?php echo base_url('css/cart_icon.css'); ?>">
     <link rel="stylesheet" href="<?php echo base_url('css/dashboard.css'); ?>">
 </head>
 
 <body>
+
+    <!-- THis below is file is included for navbar -->
     <?php include(APPPATH . 'Views/header/navbar.php'); ?>
+
+    <!-- *************** -->
 
     <section class="h-100 gradient-custom">
         <div class="container py-5">
@@ -95,11 +100,11 @@
                                 <input type="hidden" name="totalAmount" value="<?= esc($totalCost) ?>">
                                 <input type="hidden" name="user_id" value="<?= esc(session()->get('id')) ?>">
                                 <?php foreach ($cartitems as $cartitem) : ?>
-                                    <input type="hidden" name="course_id[]" value="<?= esc($cartitem['course_id']) ?>">
+                                    <input type= "hidden" name="course_id[]" value="<?= esc($cartitem['course_id']) ?>">
                                 <?php endforeach; ?>
                                 <button type="submit" class="btn btn-primary">Pay Now</button>
                             </form>
-                            
+
                             <a href="<?= base_url() ?>" class="btn btn-info">Continue Shopping</a>
 
 
@@ -109,6 +114,8 @@
             </div>
         </div>
     </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 </body>
 
 </html>

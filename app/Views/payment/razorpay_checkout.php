@@ -1,33 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <!-- Include necessary CSS and JavaScript files -->
+<button id="rzp-button1">Pay</button>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+var options = {
+    "key": "rzp_test_GIszA4oBMH50bF", // Enter the Key ID generated from the Dashboard
+    "amount": <?= $order->amount ?>, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "currency": "INR",
+    "name": "Acme Corp",
+    "description": "Test Transaction",
+    "image": "https://example.com/your_logo",
+    "order_id": "<?= $order->id ?>", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    "callback_url": "/payment/success",
+    "prefill": {
+        "name": "Aryan",
+        "email": "ayushk9304@gmail.com",
+        "contact": "9000090000"
+    },
+    "notes": {
+        "address": "Razorpay Corporate Office"
+    },
+    "theme": {
+        "color": "#3399cc"
+    }
+};
+var rzp1 = new Razorpay(options);
 
-    <!-- Include the Razorpay JavaScript SDK -->
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-</head>
-<body>
-    <!-- Automatically open Razorpay Checkout when the page loads -->
-    <script>
-        var options = {
-            "key": "rzp_test_GIszA4oBMH50bF", // Replace with your Razorpay key
-            "amount": <?= $order->amount ?>,
-            "currency": "INR",
-            "name": "Kali",
-            "description": "Payment for Courses",
-            "order_id": "<?= $order->id ?>",
-            "handler": function (response) {
-                // Handle the success callback when payment is successful
-                // You can redirect to the success page or handle it as needed
-                window.location.href = "/payment/success";
-            },
-            "prefill": {
-                "name": "", // Replace with user's name
-                "email": "" // Replace with user's email
-            }
-        };
-        var rzp = new Razorpay(options);
-        rzp.open();
-    </script>
-</body>
-</html>
+
+document.getElementById('rzp-button1').onclick = function(e){
+    rzp1.open();
+    e.preventDefault();
+}
+</script>

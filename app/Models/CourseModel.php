@@ -19,4 +19,15 @@ class CourseModel extends Model
 
 }
 
+
+    public function getEnrolledCourses()
+{
+   
+        return $this->findAll();
+
+}
+
+
+
+
 }

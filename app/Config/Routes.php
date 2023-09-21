@@ -34,8 +34,19 @@ $routes->get('courses', 'Home::index');
 $routes->get('/signin', 'Users::index');
 $routes->get('/signout', 'Users::signout');
 $routes->get('/dashboard', 'DashboardController::dashboard');
+
+$routes->get('/profile', 'ProfileController::profileInfo');
+$routes->get('/mycourses', 'EnrolledCoursesController::purchasedCourses');
+$routes->post('/payment/success', 'PaymentController::success');
+$routes->get('payment/error', 'PaymentController::error');
+
+
+
 $routes->match( ['post'], 'signup', 'Users::student_signup');
+
 $routes->post('processPayment', 'PaymentController::processPayment');
+$routes->post('/verifyPayment', 'PaymentController::verifyPayment');
+
 $routes->match( ['post'], 'authenticate', 'Users::authenticate');
 $routes->post('/cart/add', 'CartController::add');
 $routes->get('/cart/get_cart_count', 'CartController::Countcart');
